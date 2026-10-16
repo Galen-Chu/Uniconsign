@@ -1,0 +1,61 @@
+{
+  "$description": "第二層：用途。元件與專案只引用這一層。深色模式的值寫在 $extensions.mode.dark。",
+  "color": {
+    "$type": "color",
+    "bg": {
+      "canvas":  { "$value": "{color.neutral.50}",  "$extensions": { "mode": { "dark": "{color.neutral.900}" } } },
+      "surface": { "$value": "{color.neutral.0}",   "$extensions": { "mode": { "dark": "{color.neutral.800}" } } },
+      "sunken":  { "$value": "{color.neutral.100}", "$extensions": { "mode": { "dark": "{color.neutral.1000}" } } },
+      "brand":   { "$value": "{color.brand.600}",   "$extensions": { "mode": { "dark": "{color.brand.400}" } } },
+      "brand-subtle": { "$value": "{color.brand.50}", "$extensions": { "mode": { "dark": "{color.brand.900}" } } }
+    },
+    "text": {
+      "primary":   { "$value": "{color.neutral.900}", "$extensions": { "mode": { "dark": "{color.neutral.50}" } } },
+      "secondary": { "$value": "{color.neutral.600}", "$extensions": { "mode": { "dark": "{color.neutral.300}" } } },
+      "disabled":  { "$value": "{color.neutral.400}", "$extensions": { "mode": { "dark": "{color.neutral.500}" } } },
+      "on-brand":  { "$value": "{color.neutral.0}",   "$extensions": { "mode": { "dark": "{color.neutral.900}" } } },
+      "link":      { "$value": "{color.brand.600}",   "$extensions": { "mode": { "dark": "{color.brand.300}" } } }
+    },
+    "border": {
+      "default": { "$value": "{color.neutral.200}", "$extensions": { "mode": { "dark": "{color.neutral.700}" } } },
+      "strong":  { "$value": "{color.neutral.400}", "$extensions": { "mode": { "dark": "{color.neutral.500}" } } },
+      "focus":   { "$value": "{color.brand.500}",   "$extensions": { "mode": { "dark": "{color.brand.300}" } } }
+    },
+    "icon": {
+      "default": { "$value": "{color.neutral.700}", "$extensions": { "mode": { "dark": "{color.neutral.200}" } } },
+      "muted":   { "$value": "{color.neutral.400}", "$extensions": { "mode": { "dark": "{color.neutral.500}" } } },
+      "brand":   { "$value": "{color.brand.600}",   "$extensions": { "mode": { "dark": "{color.brand.300}" } } }
+    },
+    "accent": {
+      "default": { "$value": "{color.gold.500}", "$extensions": { "mode": { "dark": "{color.gold.400}" } } },
+      "subtle":  { "$value": "{color.gold.100}", "$extensions": { "mode": { "dark": "{color.gold.800}" } } }
+    },
+    "status": {
+      "success": { "$value": "{color.green.600}", "$extensions": { "mode": { "dark": "{color.green.400}" } } },
+      "warning": { "$value": "{color.gold.600}", "$extensions": { "mode": { "dark": "{color.gold.400}" } } },
+      "danger":  { "$value": "{color.red.600}",   "$extensions": { "mode": { "dark": "{color.red.400}" } } },
+      "info":    { "$value": "{color.brand.600}", "$extensions": { "mode": { "dark": "{color.brand.400}" } } }
+    }
+  },
+  "icon": {
+    "size": {
+      "$type": "dimension",
+      "sm": { "$value": "16px" },
+      "md": { "$value": "20px" },
+      "lg": { "$value": "24px" },
+      "xl": { "$value": "32px" }
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "sm": { "$value": "0 1px 2px rgb(26 25 23 / 0.06), 0 1px 1px rgb(26 25 23 / 0.04)" },
+    "md": { "$value": "0 4px 12px rgb(26 25 23 / 0.08), 0 1px 3px rgb(26 25 23 / 0.06)" },
+    "lg": { "$value": "0 16px 40px rgb(26 25 23 / 0.12), 0 4px 10px rgb(26 25 23 / 0.06)" }
+  },
+  "motion": {
+    "default": {
+      "$type": "transition",
+      "$value": "{duration.base} {easing.standard}"
+    }
+  }
+}

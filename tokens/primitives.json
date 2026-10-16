@@ -1,0 +1,121 @@
+{
+  "$description": "第一層：原始值。只描述「有哪些值」，不描述用途。元件不直接引用這一層。",
+  "color": {
+    "$type": "color",
+    "brand": {
+      "$description": "主色（暫定值，請換成你的品牌色後重新產生 50–900 階）",
+      "50":  { "$value": "#EEF6F8" },
+      "100": { "$value": "#D5EAEF" },
+      "200": { "$value": "#AAD3DE" },
+      "300": { "$value": "#77B6C7" },
+      "400": { "$value": "#4596AD" },
+      "500": { "$value": "#237B94" },
+      "600": { "$value": "#1A6278" },
+      "700": { "$value": "#164E60" },
+      "800": { "$value": "#133F4D" },
+      "900": { "$value": "#10323D" }
+    },
+    "gold": {
+      "$description": "輔色色階，語意層的 accent 與 warning 都從這裡取（暫定值）",
+      "100": { "$value": "#FCF0D2" },
+      "300": { "$value": "#F6CF7A" },
+      "400": { "$value": "#F2B53A" },
+      "500": { "$value": "#DB9A12" },
+      "600": { "$value": "#B07A0A" },
+      "800": { "$value": "#5C4006" }
+    },
+    "neutral": {
+      "$description": "偏暖的灰階",
+      "0":   { "$value": "#FFFFFF" },
+      "50":  { "$value": "#F7F7F5" },
+      "100": { "$value": "#EEEDEA" },
+      "200": { "$value": "#DEDCD7" },
+      "300": { "$value": "#C4C1BA" },
+      "400": { "$value": "#9C9890" },
+      "500": { "$value": "#77736B" },
+      "600": { "$value": "#5A574F" },
+      "700": { "$value": "#403E38" },
+      "800": { "$value": "#2A2925" },
+      "900": { "$value": "#1A1917" },
+      "1000": { "$value": "#000000" }
+    },
+    "green": {
+      "400": { "$value": "#5BC48A" },
+      "600": { "$value": "#2F8F5B" }
+    },
+    "red": {
+      "400": { "$value": "#EE7A72" },
+      "600": { "$value": "#C8423B" }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "$description": "4px 基準",
+    "0":  { "$value": "0px" },
+    "1":  { "$value": "4px" },
+    "2":  { "$value": "8px" },
+    "3":  { "$value": "12px" },
+    "4":  { "$value": "16px" },
+    "5":  { "$value": "20px" },
+    "6":  { "$value": "24px" },
+    "8":  { "$value": "32px" },
+    "10": { "$value": "40px" },
+    "12": { "$value": "48px" },
+    "16": { "$value": "64px" },
+    "24": { "$value": "96px" }
+  },
+  "radius": {
+    "$type": "dimension",
+    "none": { "$value": "0px" },
+    "sm":   { "$value": "4px" },
+    "md":   { "$value": "8px" },
+    "lg":   { "$value": "12px" },
+    "xl":   { "$value": "20px" },
+    "full": { "$value": "9999px" }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": { "$value": ["Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "system-ui", "sans-serif"] },
+      "mono": { "$value": ["JetBrains Mono", "Noto Sans Mono CJK TC", "ui-monospace", "monospace"] }
+    },
+    "size": {
+      "$type": "dimension",
+      "$description": "以 16px 為基準、約 1.2 倍的級數",
+      "xs":  { "$value": "12px" },
+      "sm":  { "$value": "14px" },
+      "md":  { "$value": "16px" },
+      "lg":  { "$value": "18px" },
+      "xl":  { "$value": "22px" },
+      "2xl": { "$value": "28px" },
+      "3xl": { "$value": "34px" },
+      "4xl": { "$value": "44px" }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular":  { "$value": 400 },
+      "medium":   { "$value": 500 },
+      "semibold": { "$value": 600 },
+      "bold":     { "$value": 700 }
+    },
+    "line-height": {
+      "$type": "number",
+      "$description": "中文內文需要比英文更寬鬆的行高",
+      "tight":  { "$value": 1.25 },
+      "snug":   { "$value": 1.45 },
+      "normal": { "$value": 1.7 }
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "fast": { "$value": "120ms" },
+    "base": { "$value": "200ms" },
+    "slow": { "$value": "320ms" }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "standard":   { "$value": [0.2, 0, 0, 1] },
+    "enter":      { "$value": [0, 0, 0, 1] },
+    "exit":       { "$value": [0.3, 0, 1, 1] }
+  }
+}

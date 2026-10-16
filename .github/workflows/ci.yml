@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:icons
+      - run: npm run preview
+      # 確認 codepoints.json 已一起提交，避免 icon font 字碼在不同機器上不一致
+      - name: codepoints.json 是否已提交
+        run: git diff --exit-code icons/codepoints.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: dist/
+
+  publish:
+    # 推送 v 開頭的 tag（例如 v0.2.0）時，發布到 GitHub Packages
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

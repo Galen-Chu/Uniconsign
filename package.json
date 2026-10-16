@@ -1,0 +1,53 @@
+{
+  "name": "@galen-chu/uniconsign",
+  "version": "0.1.0",
+  "description": "Uniconsign：design tokens、UI icon 與品牌符號的單一來源，供所有專案共用",
+  "type": "module",
+  "license": "MIT",
+  "author": "Galen Chu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Galen-Chu/Uniconsign.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./tokens.css": "./dist/tokens/tokens.css",
+    "./tokens": "./dist/tokens/tokens.js",
+    "./tokens.json": "./dist/tokens/tokens.json",
+    "./icons": "./dist/icons/icons.js",
+    "./react": "./dist/icons/react/index.js",
+    "./sprite.svg": "./dist/icons/sprite.svg",
+    "./font/*": "./dist/icons/font/*",
+    "./svg/*": "./dist/icons/svg/*"
+  },
+  "scripts": {
+    "build": "npm run build:tokens && npm run build:icons",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "build:icons": "node scripts/build-icons.mjs",
+    "lint:icons": "node scripts/lint-icons.mjs",
+    "preview": "npm run build && node scripts/build-preview.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "esbuild": "^0.25.12",
+    "fantasticon": "^3.0.0",
+    "svgo": "^3.3.2"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "overrides": {
+    "tar": "^7.5.22"
+  }
+}
