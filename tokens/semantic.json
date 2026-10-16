@@ -27,14 +27,14 @@
       "brand":   { "$value": "{color.brand.600}",   "$extensions": { "mode": { "dark": "{color.brand.300}" } } }
     },
     "accent": {
-      "default": { "$value": "{color.gold.500}", "$extensions": { "mode": { "dark": "{color.gold.400}" } } },
-      "subtle":  { "$value": "{color.gold.100}", "$extensions": { "mode": { "dark": "{color.gold.800}" } } }
+      "default": { "$value": "{color.yellow.500}", "$extensions": { "mode": { "dark": "{color.yellow.400}" } } },
+      "subtle":  { "$value": "{color.yellow.100}", "$extensions": { "mode": { "dark": "{color.yellow.800}" } } }
     },
     "status": {
-      "success": { "$value": "{color.green.600}", "$extensions": { "mode": { "dark": "{color.green.400}" } } },
-      "warning": { "$value": "{color.gold.600}", "$extensions": { "mode": { "dark": "{color.gold.400}" } } },
-      "danger":  { "$value": "{color.red.600}",   "$extensions": { "mode": { "dark": "{color.red.400}" } } },
-      "info":    { "$value": "{color.brand.600}", "$extensions": { "mode": { "dark": "{color.brand.400}" } } }
+      "success": { "$value": "{color.brand.600}",  "$extensions": { "mode": { "dark": "{color.brand.400}" } } },
+      "warning": { "$value": "{color.yellow.700}", "$extensions": { "mode": { "dark": "{color.yellow.400}" } } },
+      "danger":  { "$value": "{color.red.600}",    "$extensions": { "mode": { "dark": "{color.red.400}" } } },
+      "info":    { "$value": "{color.cyan.600}",   "$extensions": { "mode": { "dark": "{color.cyan.400}" } } }
     }
   },
   "icon": {

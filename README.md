@@ -80,7 +80,7 @@ npm install @galen-chu/uniconsign
 
 ```js
 import { tokens, cssVar } from '@galen-chu/uniconsign/tokens';
-tokens.color.bg.brand;           // '#1A6278'
+tokens.color.bg.brand;           // '#167839'
 cssVar('color.bg.brand');        // 'var(--color-bg-brand)'
 ```
 
@@ -135,7 +135,7 @@ element.innerHTML = search;   // 原始 SVG 字串
 
 ## 修改 token
 
-見 [docs/tokens.md](docs/tokens.md)。顏色目前都是暫定值，確定品牌主色後替換 `tokens/primitives.json` 的色階。
+見 [docs/tokens.md](docs/tokens.md)。目前色系定調為綠（主色）、青、黃三色；之後微調色值時改 `tokens/primitives.json` 的色階。
 
 ## 授權
 

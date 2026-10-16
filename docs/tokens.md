@@ -3,7 +3,7 @@
 ## 兩層結構
 
 ```
-primitives.json   原始值：有哪些顏色、間距、字級      color.brand.600 = #1A6278
+primitives.json   原始值：有哪些顏色、間距、字級      color.brand.600 = #167839
        ↓ 引用
 semantic.json     用途：這個值拿來做什麼           color.bg.brand = {color.brand.600}
        ↓ 使用
@@ -32,13 +32,13 @@ semantic.json     用途：這個值拿來做什麼           color.bg.brand = {
 ## 命名
 
 - 全部小寫，用 `.` 分層，輸出成 CSS 時換成 `-`：`color.text.primary` → `--color-text-primary`。
-- 原始色依**色相**命名（`brand`、`gold`、`neutral`、`green`、`red`），不用用途命名。
+- 原始色依**色相**命名（`brand`、`cyan`、`yellow`、`neutral`、`red`），不用用途命名。
 - 色階用 50–900（數字越大越深），中間留空位方便日後插入。
 - 語意層依**用途**命名，格式是 `類別.角色.變體`：`color.bg.surface`、`color.text.secondary`、`color.border.focus`。
 
 ## 目前的值
 
-所有顏色都是**暫定值**，等你確定品牌主色後替換。換的時候建議用 OKLCH 色彩空間產生 50–900 的色階，各階亮度間距會比用 HEX 手調均勻。換完之後跑 `npm run preview` 檢查兩件事：深淺色模式下文字與背景的對比是否仍達到 WCAG AA（一般文字 4.5:1），以及主色、輔色和狀態色之間是否還分得開。
+品牌色系已定調為**綠（主色 `brand`）、青（`cyan`）、黃（`yellow`）**三色。色階以 OKLCH 色彩空間產生（綠 H150、青 H208、黃 H100），各階亮度間距均勻；語意層在深淺色模式下的文字對比已驗證達 WCAG AA（一般文字 4.5:1），其中 warning 淺色刻意用 `yellow.700` 而非 600，因為黃色要在淺底上達到文字對比標準必須夠深。之後微調色值時：改 `primitives.json` 的數值後跑 `npm run preview`，檢查對比仍達標，且主色、輔色和狀態色之間還分得開。
 
 字體預設 `Inter` 搭配 `Noto Sans TC`，有中文時會自動退回系統的蘋方或微軟正黑體。中文內文行高用 1.7，比英文常見的 1.5 寬鬆，是刻意的。
 

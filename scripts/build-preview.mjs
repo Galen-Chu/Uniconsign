@@ -90,7 +90,7 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
   <h3>語意色（專案只用這一層）</h3><div class="row">${swatches('color.bg.', 'color.')}${swatches('color.text.', 'color.')}</div>
   <div class="row" style="margin-top:var(--space-3)">${swatches('color.border.', 'color.')}${swatches('color.icon.', 'color.')}${swatches('color.accent.', 'color.')}${swatches('color.status.', 'color.')}</div>
   <h3>主色</h3><div class="row">${swatches('color.brand.')}</div>
-  <h3>輔色</h3><div class="row">${swatches('color.gold.')}</div>
+  <h3>輔色</h3><div class="row">${swatches('color.cyan.')}${swatches('color.yellow.')}</div>
   <h3>中性色</h3><div class="row">${swatches('color.neutral.')}</div>
 </section>
 
