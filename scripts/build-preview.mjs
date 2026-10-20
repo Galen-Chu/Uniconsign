@@ -76,6 +76,37 @@ body.show-grid .grid { display: block; }
 code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); color: var(--color-text-secondary); }
 .inline { font-size: var(--font-size-lg); }
 .inline svg { width: 1em; height: 1em; vertical-align: -0.125em; color: var(--color-icon-brand); }
+.demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); }
+.demo-card { background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+.demo-card h3 { margin: 0; }
+.demo-card label { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.demo-card input { font: inherit; color: var(--color-text-primary); background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); }
+.demo-card input::placeholder { color: var(--color-text-disabled); }
+.demo-card input:focus { outline: 2px solid var(--color-border-focus); outline-offset: -1px; border-color: var(--color-border-focus); }
+.btn-primary { background: var(--color-bg-brand); border-color: var(--color-bg-brand); color: var(--color-text-on-brand); font-weight: var(--font-weight-medium); }
+.btn-primary:hover { background: var(--color-brand-700); border-color: var(--color-brand-700); }
+.btn-primary svg { width: 1em; height: 1em; vertical-align: -0.125em; }
+.demo-actions { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.demo-actions a { color: var(--color-text-link); font-size: var(--font-size-sm); }
+.alert { display: flex; align-items: baseline; gap: var(--space-2); font-size: var(--font-size-sm); padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md); }
+.alert b { font-weight: var(--font-weight-medium); }
+.alert-success { background: color-mix(in srgb, var(--color-status-success) 12%, var(--color-bg-surface)); color: var(--color-status-success); }
+.alert-info { background: color-mix(in srgb, var(--color-status-info) 12%, var(--color-bg-surface)); color: var(--color-status-info); }
+.alert-warning { background: color-mix(in srgb, var(--color-status-warning) 14%, var(--color-bg-surface)); color: var(--color-status-warning); }
+.alert-danger { background: color-mix(in srgb, var(--color-status-danger) 12%, var(--color-bg-surface)); color: var(--color-status-danger); }
+.badge { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-xs); font-weight: var(--font-weight-medium);
+  background: var(--color-bg-sunken); color: var(--color-text-primary); border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); }
+.badge i { width: 8px; height: 8px; border-radius: var(--radius-full); }
+.demo-search { position: relative; }
+.demo-search svg { position: absolute; left: var(--space-3); top: 50%; translate: 0 -50%; width: 16px; height: 16px; color: var(--color-icon-muted); }
+.demo-search input { width: 100%; padding-left: var(--space-8); }
+.demo-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--font-size-sm); }
+.demo-list li { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-default); border-radius: var(--radius-md); }
+.demo-list svg { width: 16px; height: 16px; color: var(--color-icon-brand); flex: none; }
 </style>
 </head>
 <body>
@@ -113,8 +144,48 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
   <div class="ics">${brandCells}</div>
 </section>
 
+<section>
+  <h2>元件示範</h2>
+  <p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin:0 0 var(--space-4)">以下元件只用語意層 token 組成，用上方按鈕切換深色模式看看兩種模式的效果。</p>
+  <div class="demo">
+    <div class="demo-card">
+      <h3>帳號登入</h3>
+      <label>電子郵件 <input type="email" placeholder="you@example.com"></label>
+      <label>密碼 <input type="password" placeholder="請輸入密碼"></label>
+      <div class="demo-actions">
+        <button type="button" class="btn-primary">${icons.arrowRight} 登入</button>
+        <button type="button">取消</button>
+        <a href="#" onclick="return false">忘記密碼？</a>
+      </div>
+    </div>
+    <div class="demo-card">
+      <h3>系統訊息</h3>
+      <div class="alert alert-success"><b>已儲存。</b>變更會同步到所有裝置。</div>
+      <div class="alert alert-info"><b>有新版可取得。</b>詳情請見更新紀錄。</div>
+      <div class="alert alert-warning"><b>儲存空間不足。</b>即將到達上限。</div>
+      <div class="alert alert-danger"><b>連線中斷。</b>請檢查網路後重試。</div>
+      <div class="demo-actions">
+        <span class="badge"><i style="background:var(--color-status-success)"></i>運作中</span>
+        <span class="badge"><i style="background:var(--color-status-warning)"></i>維護中</span>
+        <span class="badge"><i style="background:var(--color-accent-default)"></i>新功能</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <h3>搜尋與清單</h3>
+      <div class="demo-search">${icons.search}<input type="search" placeholder="搜尋功能…"></div>
+      <ul class="demo-list">
+        <li>${icons.check}Design tokens（顏色、間距、字級）</li>
+        <li>${icons.check}UI icon 與品牌符號</li>
+        <li>${icons.arrowRight}深色模式支援</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <script>
   const root = document.documentElement;
+  const forced = new URLSearchParams(location.search).get('theme');
+  if (forced === 'dark' || forced === 'light') root.dataset.theme = forced;
   document.getElementById('grid').onclick = () => document.body.classList.toggle('show-grid');
   document.getElementById('theme').onclick = () => {
     const dark = root.dataset.theme === 'dark' ||
