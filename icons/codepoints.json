@@ -3,5 +3,18 @@
   "check": 57346,
   "close": 57347,
   "plus": 57348,
-  "search": 57349
+  "search": 57349,
+  "approximately-equal": 57350,
+  "arrow-down": 57351,
+  "arrow-left": 57352,
+  "arrow-up": 57353,
+  "divide": 57354,
+  "equal": 57355,
+  "infinity": 57356,
+  "minus": 57357,
+  "multiply": 57358,
+  "not-equal": 57359,
+  "percent": 57360,
+  "pi": 57361,
+  "square-root": 57362
 }
