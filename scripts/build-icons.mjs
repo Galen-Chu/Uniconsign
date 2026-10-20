@@ -37,7 +37,7 @@ if (problems.length) {
 }
 
 await rm(OUT, { recursive: true, force: true });
-for (const d of ['svg/ui', 'svg/brand', 'react', 'font']) await mkdir(path.join(OUT, d), { recursive: true });
+for (const d of ['svg/ui', 'svg/symbols', 'svg/font', 'svg/brand', 'react', 'font']) await mkdir(path.join(OUT, d), { recursive: true });
 
 // ---- 1. SVGO 設定 ----
 // UI：去掉所有顏色，根節點設 fill="currentColor"，顏色交給外層 CSS 控制
@@ -67,20 +67,32 @@ const pascal = (s) => s.replace(/(^|-)([a-z0-9])/g, (_, __, c) => c.toUpperCase(
 const camel = (s) => s.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
 
 // ---- 2. 讀取並最佳化 ----
-const icons = []; // { kind, name, svg, viewBox, inner }
-for (const kind of ['ui', 'brand']) {
-  const files = (await readdir(path.join('icons', kind))).filter((f) => f.endsWith('.svg')).sort();
+const icons = []; // { kind, category, name, svg, viewBox, inner }
+const readDir = async (kind, dir, category = null) => {
+  const files = (await readdir(dir)).filter((f) => f.endsWith('.svg')).sort();
   for (const f of files) {
     const name = f.replace(/\.svg$/, '');
-    const raw = await readFile(path.join('icons', kind, f), 'utf8');
-    const { data } = optimize(raw, kind === 'ui' ? uiSvgo : brandSvgo(name));
+    const raw = await readFile(path.join(dir, f), 'utf8');
+    const { data } = optimize(raw, kind === 'brand' ? brandSvgo(name) : uiSvgo);
     const viewBox = data.match(/viewBox="([^"]+)"/)[1];
     const inner = data.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
-    icons.push({ kind, name, svg: data, viewBox, inner });
-    await writeFile(path.join(OUT, 'svg', kind, f), data);
+    icons.push({ kind, category, name, svg: data, viewBox, inner });
+    const outDir = path.join(OUT, 'svg', kind, ...(category ? [category] : []));
+    await mkdir(outDir, { recursive: true });
+    await writeFile(path.join(outDir, f), data);
+    // icon font 只吃單一目錄，UI 與符號的 SVG 另外集中一份
+    if (kind !== 'brand') await writeFile(path.join(OUT, 'svg', 'font', f), data);
   }
-}
+};
+await readDir('ui', 'icons/ui');
+const categories = (await readdir('icons/symbols', { withFileTypes: true }))
+  .filter((d) => d.isDirectory())
+  .map((d) => d.name)
+  .sort();
+for (const category of categories) await readDir('symbols', path.join('icons/symbols', category), category);
+await readDir('brand', 'icons/brand');
 const ui = icons.filter((i) => i.kind === 'ui');
+const symbolIcons = icons.filter((i) => i.kind === 'symbols');
 const brand = icons.filter((i) => i.kind === 'brand');
 
 // ---- 3. Sprite ----
@@ -96,12 +108,15 @@ await writeFile(
   '// 由 scripts/build-icons.mjs 產生\n' +
     icons.map((i) => `export const ${jsName(i)} = ${JSON.stringify(i.svg)};`).join('\n') +
     `\nexport const uiIconNames = ${JSON.stringify(ui.map((i) => i.name))};\n` +
-    `export const brandIconNames = ${JSON.stringify(brand.map((i) => i.name))};\n`
+    `\nexport const symbolCategories = ${JSON.stringify(
+      Object.fromEntries(categories.map((c) => [c, symbolIcons.filter((s) => s.category === c).map((s) => s.name)]))
+    )};\n` +
+    `\nexport const brandIconNames = ${JSON.stringify(brand.map((i) => i.name))};\n`
 );
 await writeFile(
   path.join(OUT, 'icons.d.ts'),
   icons.map((i) => `export declare const ${jsName(i)}: string;`).join('\n') +
-    `\nexport declare const uiIconNames: string[];\nexport declare const brandIconNames: string[];\n`
+    `\nexport declare const uiIconNames: string[];\nexport declare const symbolCategories: Record<string, string[]>;\nexport declare const brandIconNames: string[];\n`
 );
 
 // ---- 5. React 元件 ----
@@ -149,32 +164,33 @@ await writeFile(
     exportsDts.join('\n') + '\n'
 );
 
-// ---- 6. Icon font（僅 UI icon）----
+// ---- 6. Icon font（UI icon 與符號）----
 // codepoint 存在 repo 裡，新增 icon 只會往後加，既有 icon 的 codepoint 永遠不變
+const fontPool = [...ui, ...symbolIcons];
 let codepoints = {};
 try {
   codepoints = JSON.parse(await readFile(CODEPOINTS_FILE, 'utf8'));
 } catch {}
 let next = Math.max(config.codepointStart - 1, ...Object.values(codepoints)) + 1;
-for (const i of ui) if (!(i.name in codepoints)) codepoints[i.name] = next++;
-const removed = Object.keys(codepoints).filter((n) => !ui.some((i) => i.name === n));
+for (const i of fontPool) if (!(i.name in codepoints)) codepoints[i.name] = next++;
+const removed = Object.keys(codepoints).filter((n) => !fontPool.some((i) => i.name === n));
 if (removed.length) console.warn(`! 以下 icon 已刪除，codepoint 保留不重複使用：${removed.join(', ')}`);
 await writeFile(CODEPOINTS_FILE, JSON.stringify(codepoints, null, 2) + '\n');
 
 await generateFonts({
-  inputDir: path.join(OUT, 'svg', 'ui'),
+  inputDir: path.join(OUT, 'svg', 'font'),
   outputDir: path.join(OUT, 'font'),
   name: config.fontName,
   prefix: config.prefix,
   tag: 'i',
   fontTypes: [FontAssetType.WOFF2, FontAssetType.WOFF],
   assetTypes: [OtherAssetType.CSS, OtherAssetType.JSON, OtherAssetType.HTML],
-  codepoints: Object.fromEntries(Object.entries(codepoints).filter(([n]) => ui.some((i) => i.name === n))),
+  codepoints: Object.fromEntries(Object.entries(codepoints).filter(([n]) => fontPool.some((i) => i.name === n))),
   normalize: true,
   fontHeight: 1000,
   descent: 125,
 });
 
 console.log(
-  `✓ icons：${ui.length} 個 UI、${brand.length} 個 brand → ${OUT}/（svg、sprite、icons.js、react、font）`
+  `✓ icons：${ui.length} 個 UI、${symbolIcons.length} 個符號（${categories.length} 類）、${brand.length} 個 brand → ${OUT}/（svg、sprite、icons.js、react、font）`
 );

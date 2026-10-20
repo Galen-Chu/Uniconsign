@@ -26,7 +26,12 @@ const iconCell = (name, svg) => `
     <code>${name}</code>
   </div>`;
 
-const uiCells = icons.uiIconNames.map((n) => iconCell(n, icons[n.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())])).join('');
+const camel = (n) => n.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
+const CATEGORY_LABELS = { math: '數學符號', philosophy: '哲學符號', science: '科學符號', theology: '神學符號' };
+const uiCells = icons.uiIconNames.map((n) => iconCell(n, icons[camel(n)])).join('');
+const symbolSections = Object.entries(icons.symbolCategories)
+  .map(([cat, names]) => `<h3>${CATEGORY_LABELS[cat] ?? cat}</h3><div class="ics">${names.map((n) => iconCell(n, icons[camel(n)])).join('')}</div>`)
+  .join('');
 const brandCells = icons.brandIconNames
   .map((n) => iconCell(n, icons['brand' + n.replace(/(^|-)([a-z0-9])/g, (_, __, c) => c.toUpperCase())]))
   .join('');
@@ -138,8 +143,9 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
 
 <section>
   <h2>UI icon</h2>
-  <p class="inline">放在文字中的樣子：搜尋 ${icons.search} 新增 ${icons.plus} 完成 ${icons.check}</p>
+  <p class="inline">放在文字中的樣子：搜尋 ${icons.search} 新增 ${icons.plus} 完成 ${icons.check} 無限 ${icons.infinity}</p>
   <div class="ics">${uiCells}</div>
+  ${symbolSections}
   <h3>品牌符號</h3>
   <div class="ics">${brandCells}</div>
 </section>

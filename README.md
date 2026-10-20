@@ -18,7 +18,8 @@ tokens/
   semantic.json         用途：bg、text、border、icon、status（含深色模式）
 icons/
   ui/                   單色 UI icon，24×24，已外框化
-  brand/                品牌符號，可多色
+  symbols/              符號系統，依內容分類：math / philosophy / science / theology
+  brand/                品牌符號，可多色（logo-mark、logo-c、logo-p、logo-s）
   codepoints.json       icon font 字碼表（自動維護，請提交）
 templates/
   icon-grid-24.svg      設計用網格模板
