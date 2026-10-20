@@ -95,6 +95,20 @@ const ui = icons.filter((i) => i.kind === 'ui');
 const symbolIcons = icons.filter((i) => i.kind === 'symbols');
 const brand = icons.filter((i) => i.kind === 'brand');
 
+// 語意排序：icons/order.json 定義同類內的相鄰順序；未列出的排後面（依字母）
+let order = {};
+try {
+  order = JSON.parse(await readFile('icons/order.json', 'utf8'));
+} catch {}
+const sortNames = (names, preferred) => [
+  ...(preferred ?? []).filter((n) => names.includes(n)),
+  ...names.filter((n) => !(preferred ?? []).includes(n)).sort(),
+];
+const categoryOrder = [
+  ...Object.keys(order).filter((c) => categories.includes(c)),
+  ...categories.filter((c) => !(c in order)),
+];
+
 // ---- 3. Sprite ----
 const symbols = icons
   .map((i) => `<symbol id="${config.prefix}-${i.kind === 'brand' ? 'brand-' : ''}${i.name}" viewBox="${i.viewBox}">${i.inner}</symbol>`)
@@ -107,11 +121,13 @@ await writeFile(
   path.join(OUT, 'icons.js'),
   '// 由 scripts/build-icons.mjs 產生\n' +
     icons.map((i) => `export const ${jsName(i)} = ${JSON.stringify(i.svg)};`).join('\n') +
-    `\nexport const uiIconNames = ${JSON.stringify(ui.map((i) => i.name))};\n` +
+    `\nexport const uiIconNames = ${JSON.stringify(sortNames(ui.map((i) => i.name), order.ui))};\n` +
     `\nexport const symbolCategories = ${JSON.stringify(
-      Object.fromEntries(categories.map((c) => [c, symbolIcons.filter((s) => s.category === c).map((s) => s.name)]))
+      Object.fromEntries(
+        categoryOrder.map((c) => [c, sortNames(symbolIcons.filter((s) => s.category === c).map((s) => s.name), order[c])])
+      )
     )};\n` +
-    `\nexport const brandIconNames = ${JSON.stringify(brand.map((i) => i.name))};\n`
+    `\nexport const brandIconNames = ${JSON.stringify(sortNames(brand.map((i) => i.name), order.brand))};\n`
 );
 await writeFile(
   path.join(OUT, 'icons.d.ts'),

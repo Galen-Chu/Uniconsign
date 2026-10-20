@@ -1,0 +1,9 @@
+{
+  "$description": "各類 icon 的語意排序：相似來源、��能或領域的符號相鄰。未列出的 icon 排在後面（依字母）。預覽頁與 icons.js 的輸出順序都依此。",
+  "ui": ["arrow-right", "arrow-up-right", "arrow-up", "arrow-up-left", "arrow-left", "arrow-down-left", "arrow-down", "arrow-down-right", "check", "close"],
+  "math": ["plus", "minus", "multiply", "divide", "equal", "not-equal", "approximately-equal", "greater-than", "greater-equal", "less-than", "less-equal", "percent", "square-root", "integral", "sigma", "delta", "pi", "infinity"],
+  "philosophy": ["yin-yang", "balance", "enso", "spiral", "hourglass", "question", "exclamation", "logical-and", "logical-or", "because", "therefore", "hypothesis", "intersection", "union", "disjoint", "independent"],
+  "science": ["search", "microscope", "telescope", "atom", "orbit", "molecule", "wave", "magnet", "lightning", "cell", "dna", "flask", "beaker", "powder", "capsule", "medicine-jar", "metal", "ceramic"],
+  "theology": ["sun", "moon", "star", "sky", "sea", "water-drop", "ice", "fog", "wind", "air", "mountain", "ground", "earth", "sand", "tree", "sprout", "grass", "fern", "flower", "eye", "heart", "book", "fire"],
+  "brand": ["logo-mark", "logo-c", "logo-p", "logo-s"]
+}
