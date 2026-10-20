@@ -84,5 +84,19 @@
   "sand": 57427,
   "sea": 57428,
   "sky": 57429,
-  "wind": 57430
+  "wind": 57430,
+  "double-check": 57431,
+  "open": 57432,
+  "triple-check": 57433,
+  "alpha": 57434,
+  "beta": 57435,
+  "congruent": 57436,
+  "gamma": 57437,
+  "lambda": 57438,
+  "mu": 57439,
+  "omega": 57440,
+  "phi": 57441,
+  "psi": 57442,
+  "tau": 57443,
+  "theta": 57444
 }
