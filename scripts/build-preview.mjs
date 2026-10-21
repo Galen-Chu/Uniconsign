@@ -192,12 +192,17 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
   const root = document.documentElement;
   const forced = new URLSearchParams(location.search).get('theme');
   if (forced === 'dark' || forced === 'light') root.dataset.theme = forced;
-  document.getElementById('grid').onclick = () => document.body.classList.toggle('show-grid');
-  document.getElementById('theme').onclick = () => {
-    const dark = root.dataset.theme === 'dark' ||
-      (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
-    root.dataset.theme = dark ? 'light' : 'dark';
+  const isDark = () => root.dataset.theme === 'dark' ||
+    (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+  const themeBtn = document.getElementById('theme');
+  const gridBtn = document.getElementById('grid');
+  const syncThemeLabel = () => { themeBtn.textContent = isDark() ? '切換淺色' : '切換深色'; };
+  themeBtn.onclick = () => { root.dataset.theme = isDark() ? 'light' : 'dark'; syncThemeLabel(); };
+  gridBtn.onclick = () => {
+    const shown = document.body.classList.toggle('show-grid');
+    gridBtn.textContent = shown ? '隱藏網格' : '顯示網格';
   };
+  syncThemeLabel();
 </script>
 </body>
 </html>

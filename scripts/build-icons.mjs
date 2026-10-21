@@ -191,7 +191,13 @@ let next = Math.max(config.codepointStart - 1, ...Object.values(codepoints)) + 1
 for (const i of fontPool) if (!(i.name in codepoints)) codepoints[i.name] = next++;
 const removed = Object.keys(codepoints).filter((n) => !fontPool.some((i) => i.name === n));
 if (removed.length) console.warn(`! 以下 icon 已刪除，codepoint 保留不重複使用：${removed.join(', ')}`);
-await writeFile(CODEPOINTS_FILE, JSON.stringify(codepoints, null, 2) + '\n');
+// codepoints.json 依「UI → 各類別（order.json 順序）→ 已移除」排序輸出；字碼值永不改變
+const orderedNames = [
+  ...sortNames(ui.map((i) => i.name), order.ui),
+  ...categoryOrder.flatMap((c) => sortNames(symbolIcons.filter((s) => s.category === c).map((s) => s.name), order[c])),
+  ...removed.sort(),
+];
+await writeFile(CODEPOINTS_FILE, JSON.stringify(Object.fromEntries(orderedNames.map((n) => [n, codepoints[n]])), null, 2) + '\n');
 
 await generateFonts({
   inputDir: path.join(OUT, 'svg', 'font'),
