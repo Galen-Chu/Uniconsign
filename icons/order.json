@@ -4,6 +4,8 @@
   "math": ["plus", "minus", "multiply", "divide", "equal", "not-equal", "approximately-equal", "congruent", "greater-than", "greater-equal", "less-than", "less-equal", "percent", "square-root", "integral", "alpha", "beta", "gamma", "delta", "theta", "lambda", "mu", "pi", "sigma", "tau", "phi", "psi", "omega", "infinity"],
   "philosophy": ["yin-yang", "balance", "enso", "spiral", "hourglass", "question", "exclamation", "logical-and", "logical-or", "because", "therefore", "hypothesis", "intersection", "union", "disjoint", "independent"],
   "science": ["search", "microscope", "telescope", "atom", "orbit", "molecule", "wave", "magnet", "lightning", "cell", "dna", "flask", "beaker", "powder", "capsule", "medicine-jar", "metal", "ceramic"],
-  "theology": ["sun", "moon", "star", "sky", "sea", "water-drop", "ice", "fog", "wind", "air", "mountain", "ground", "earth", "sand", "tree", "sprout", "grass", "fern", "flower", "eye", "heart", "book", "fire"],
+  "dao": ["sun", "moon", "star", "sky", "cloud", "sea", "water-drop", "ice", "fog", "wind", "air", "fire", "mountain", "ground", "earth", "sand", "tree", "sprout", "grass", "fern", "flower"],
+  "law": ["book"],
+  "theology": ["eye", "heart"],
   "brand": ["logo-mark", "logo-c", "logo-p", "logo-s"]
 }
