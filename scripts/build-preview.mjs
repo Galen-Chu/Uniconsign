@@ -79,8 +79,6 @@ button:focus-visible { outline: 2px solid var(--color-border-focus); outline-off
   background-size: 4px 4px; opacity: .25; outline: 8px solid color-mix(in srgb, var(--color-accent-default) 20%, transparent); outline-offset: -8px; }
 body.show-grid .grid { display: block; }
 code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); color: var(--color-text-secondary); }
-.inline { font-size: var(--font-size-lg); }
-.inline svg { width: 1em; height: 1em; vertical-align: -0.125em; color: var(--color-icon-brand); }
 .demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); }
 .demo-card { background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
@@ -143,7 +141,7 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
 
 <section>
   <h2>UI icon</h2>
-  <p class="inline">放在文字中的樣子：搜尋 ${icons.search} 新增 ${icons.plus} 完成 ${icons.check} 無限 ${icons.infinity}</p>
+  <h3>基礎符號</h3>
   <div class="ics">${uiCells}</div>
   ${symbolSections}
   <h3>品牌符號</h3>
