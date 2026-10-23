@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M5 6H19Q21 6 21 8V16Q21 18 19 18H5Q3 18 3 16V8Q3 6 5 6Z M5 8V16H19V8Z" fill="#1A1917"/>
+  <rect x="7" y="4.1" width="2" height="12.31" rx="1" transform="rotate(-50.91 8 10.25)" fill="#1A1917"/>
+  <rect x="15" y="4.1" width="2" height="12.31" rx="1" transform="rotate(50.91 16 10.25)" fill="#1A1917"/>
+</svg>
