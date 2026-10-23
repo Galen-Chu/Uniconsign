@@ -1,6 +1,6 @@
 {
   "name": "@galen-chu/uniconsign",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Uniconsign：design tokens、UI icon 與品牌符號的單一來源，供所有專案共用",
   "type": "module",
   "license": "MIT",
