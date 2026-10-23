@@ -4,7 +4,7 @@
 
 ## 三種 icon
 
-| 類型 | ���在哪裡 | 顏色 | 會輸出成 |
+| 類型 | 放在哪裡 | 顏色 | 會輸出成 |
 | --- | --- | --- | --- |
 | UI icon | `icons/ui/` | 單色，build 時自動改成 `currentColor` | SVG、sprite、React 元件、icon font |
 | 符號 | `icons/symbols/<類別>/` | 同 UI icon | 同 UI icon |
