@@ -27,7 +27,7 @@ const iconCell = (name, svg) => `
   </div>`;
 
 const camel = (n) => n.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
-const CATEGORY_LABELS = { math: '數學符號', philosophy: '哲學符號', science: '科學符號', dao: '道學符號', law: '法學符號', human: '人學符號', theology: '神學符號' };
+const CATEGORY_LABELS = { math: '數學符號', philosophy: '哲學符號', science: '科學符號', weapons: '武器符號', dao: '道學符號', law: '法學符號', human: '人學符號', theology: '神學符號' };
 const uiCells = icons.uiIconNames.map((n) => iconCell(n, icons[camel(n)])).join('');
 const symbolSections = Object.entries(icons.symbolCategories)
   .map(([cat, names]) => `<h3>${CATEGORY_LABELS[cat] ?? cat}</h3><div class="ics">${names.map((n) => iconCell(n, icons[camel(n)])).join('')}</div>`)
