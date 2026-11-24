@@ -4,7 +4,8 @@ import { readFile, writeFile } from 'node:fs/promises';
 import config from '../brand.config.mjs';
 
 const css = await readFile('dist/tokens/tokens.css', 'utf8');
-const { light } = JSON.parse(await readFile('dist/tokens/tokens.json', 'utf8'));
+const { light, dark } = JSON.parse(await readFile('dist/tokens/tokens.json', 'utf8'));
+const { version } = JSON.parse(await readFile('package.json', 'utf8'));
 const icons = await import('../dist/icons/icons.js?' + Date.now());
 
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -12,12 +13,58 @@ const ids = Object.keys(light);
 const group = (prefix) => ids.filter((id) => id.startsWith(prefix));
 const cssVar = (id) => `var(--${id.replaceAll('.', '-')})`;
 
-const swatches = (prefix, strip = prefix) =>
-  group(prefix)
-    .map((id) => `<figure class="sw"><span style="background:${cssVar(id)}"></span><figcaption>${id.slice(strip.length)}<small>${light[id]}</small></figcaption></figure>`)
-    .join('');
-
 const scale = (prefix, render) => group(prefix).map((id) => render(id)).join('');
+
+// 色票：語意色依角色分組標示，各類用能表達用途的樣式呈現
+const cap = (id) => id.split('.').pop();
+const fig = (id, inner, caption, value, prim = false) =>
+  `<figure class="sw${prim ? ' prim' : ''}"${value ? ` title="${esc(`${id} = ${value}`)}"` : ''}>${inner}` +
+  `<figcaption><code>${caption}</code>${prim && value ? `<small>${value}</small>` : ''}</figcaption></figure>`;
+const blockSw = (id, caption) => fig(id, `<span class="box" style="background:${cssVar(id)}"></span>`, caption, light[id]);
+const textSw = (id, caption) => {
+  const onBrand = id.endsWith('on-brand'), onAccent = id.endsWith('on-accent'), link = id.endsWith('link');
+  const bg = onBrand ? 'background:var(--color-bg-brand);' : onAccent ? 'background:var(--color-accent-default);' : '';
+  return fig(id,
+    `<span class="box"><span class="t" style="color:${cssVar(id)};${bg}${link ? 'text-decoration:underline' : ''}">文Aa</span></span>`,
+    caption, light[id]);
+};
+const borderSw = (id, caption) =>
+  fig(id, `<span class="box" style="border-color:${cssVar(id)};border-width:2px"></span>`, caption, light[id]);
+const iconSw = (id, caption) =>
+  fig(id, `<span class="box ic-box" style="color:${cssVar(id)}">${icons.check}</span>`, caption, light[id]);
+// 半透明覆蓋色：左半疊淺色底、右半疊深色底，展示實際疊加效果
+const dualSw = (id, caption) => {
+  const dk = dark[id] ?? light[id];
+  return fig(id,
+    `<span class="dual"><i style="background:var(--color-neutral-0)"><b style="background:${light[id]}"></b></i>` +
+    `<i style="background:var(--color-neutral-900)"><b style="background:${dk}"></b></i></span>`,
+    caption, `淺 ${light[id]}／深 ${dk}`);
+};
+
+const semanticRows = [
+  ['背景 bg', ['canvas', 'surface', 'sunken', 'brand', 'brand-subtle', 'disabled'].map((s) => 'color.bg.' + s), blockSw],
+  ['狀態淡底', ['success-subtle', 'warning-subtle', 'danger-subtle', 'info-subtle'].map((s) => 'color.bg.' + s), blockSw],
+  ['互動覆蓋（半透明）', ['hover', 'active', 'overlay'].map((s) => 'color.bg.' + s), dualSw],
+  ['文字 text', ['primary', 'secondary', 'disabled', 'on-brand', 'on-accent', 'link'].map((s) => 'color.text.' + s), textSw],
+  ['邊框 border', ['default', 'strong', 'focus'].map((s) => 'color.border.' + s), borderSw],
+  ['圖示 icon', ['default', 'muted', 'brand'].map((s) => 'color.icon.' + s), iconSw],
+  ['強調 accent', ['default', 'subtle'].map((s) => 'color.accent.' + s), blockSw],
+  ['狀態 status', ['success', 'warning', 'danger', 'info'].map((s) => 'color.status.' + s), blockSw],
+].map(([label, ids, render]) =>
+  `<div class="sem-label">${label}</div><div class="sem-cells">${ids.map((id) => render(id, cap(id))).join('')}</div>`
+).join('');
+
+const primRows = [
+  ['主色 brand', 'color.brand.'],
+  ['輔色 cyan', 'color.cyan.'],
+  ['輔色 yellow', 'color.yellow.'],
+  ['危險 red', 'color.red.'],
+  ['中性 neutral', 'color.neutral.'],
+].map(([label, prefix]) =>
+  `<div class="sem-label">${label}</div><div class="sem-cells">${
+    group(prefix).map((id) => fig(id, `<span class="box" style="background:${cssVar(id)}"></span>`, cap(id), light[id], true)).join('')
+  }</div>`
+).join('');
 
 const iconCell = (name, svg) => `
   <div class="ic">
@@ -56,10 +103,22 @@ button { font: inherit; font-size: var(--font-size-sm); color: var(--color-text-
   border: 1px solid var(--color-border-default); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); cursor: pointer; }
 button:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
 .row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-.sw { margin: 0; width: 132px; font-size: var(--font-size-xs); }
-.sw span { display: block; height: 56px; border-radius: var(--radius-md); border: 1px solid var(--color-border-default); }
-.sw figcaption { margin-top: var(--space-1); display: flex; justify-content: space-between; }
+.sem-grid { display: grid; grid-template-columns: 120px 1fr; gap: var(--space-3) var(--space-4); align-items: start; }
+.sem-label { font-size: var(--font-size-xs); color: var(--color-text-secondary); padding-top: 14px; text-align: right; }
+.sem-cells { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.sw { margin: 0; width: 112px; font-size: var(--font-size-xs); }
+.sw.prim { width: 132px; }
+.sw .box { display: flex; align-items: center; justify-content: center; height: 48px; border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default); }
+.sw .t { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); }
+.sw .ic-box svg { width: 20px; height: 20px; display: block; }
+.sw .dual { display: flex; height: 48px; border-radius: var(--radius-md); border: 1px solid var(--color-border-default); overflow: hidden; }
+.sw .dual i { flex: 1; position: relative; display: block; }
+.sw .dual i + i { border-left: 1px solid var(--color-border-default); }
+.sw .dual b { position: absolute; inset: 0; display: block; }
+.sw figcaption { margin-top: var(--space-1); display: flex; justify-content: space-between; gap: var(--space-2); }
 .sw small { color: var(--color-text-secondary); font-family: var(--font-family-mono); }
+@media (max-width: 720px) { .sem-grid { grid-template-columns: 1fr; } .sem-label { text-align: left; padding-top: 0; } }
 .space { display: flex; align-items: center; gap: var(--space-3); font-size: var(--font-size-xs); }
 .space b { display: block; height: 12px; background: var(--color-bg-brand); border-radius: 2px; }
 .radius { width: 72px; height: 72px; background: var(--color-bg-brand-subtle); border: 1px solid var(--color-border-strong);
@@ -118,21 +177,21 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
 <body>
 <header>
   <h1>Uniconsign</h1>
+  <code class="ver">v${version}</code>
   <button type="button" id="grid">顯示網格</button>
   <button type="button" id="theme">切換深色</button>
 </header>
 
 <section>
   <h2>顏色</h2>
-  <h3>語意色（專案只用這一層）</h3><div class="row">${swatches('color.bg.', 'color.')}${swatches('color.text.', 'color.')}</div>
-  <div class="row" style="margin-top:var(--space-3)">${swatches('color.border.', 'color.')}${swatches('color.icon.', 'color.')}${swatches('color.accent.', 'color.')}${swatches('color.status.', 'color.')}</div>
-  <h3>主色</h3><div class="row">${swatches('color.brand.')}</div>
-  <h3>輔色</h3><div class="row">${swatches('color.cyan.')}${swatches('color.yellow.')}</div>
-  <h3>中性色</h3><div class="row">${swatches('color.neutral.')}</div>
+  <h3>語意色（專案只用這一層）</h3>
+  <div class="sem-grid">${semanticRows}</div>
+  <h3>原始色階（組出語意層的原料）</h3>
+  <div class="sem-grid">${primRows}</div>
 </section>
 
 <section>
-  <h2>文字</h2>
+  <h2>字級</h2>
   <div class="type">${scale('font.size.', (id) => `<p style="font-size:${cssVar(id)}">${id.split('.').pop()} · ${light[id]} — 一致的系統讓每個專案都像同一家人</p>`)}</div>
 </section>
 
