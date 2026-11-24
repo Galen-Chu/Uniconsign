@@ -90,16 +90,17 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
 .demo-card input:focus { outline: 2px solid var(--color-border-focus); outline-offset: -1px; border-color: var(--color-border-focus); }
 .btn-primary { background: var(--color-bg-brand); border-color: var(--color-bg-brand); color: var(--color-text-on-brand); font-weight: var(--font-weight-medium); }
 .btn-primary:hover { background: var(--color-brand-700); border-color: var(--color-brand-700); }
+.btn-disabled { background: var(--color-bg-disabled); border-color: transparent; color: var(--color-text-disabled); }
 .btn-primary svg { width: 1em; height: 1em; vertical-align: -0.125em; }
 .demo-actions { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
 .demo-actions a { color: var(--color-text-link); font-size: var(--font-size-sm); }
 .alert { display: flex; align-items: baseline; gap: var(--space-2); font-size: var(--font-size-sm); padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md); }
 .alert b { font-weight: var(--font-weight-medium); }
-.alert-success { background: color-mix(in srgb, var(--color-status-success) 12%, var(--color-bg-surface)); color: var(--color-status-success); }
-.alert-info { background: color-mix(in srgb, var(--color-status-info) 12%, var(--color-bg-surface)); color: var(--color-status-info); }
-.alert-warning { background: color-mix(in srgb, var(--color-status-warning) 14%, var(--color-bg-surface)); color: var(--color-status-warning); }
-.alert-danger { background: color-mix(in srgb, var(--color-status-danger) 12%, var(--color-bg-surface)); color: var(--color-status-danger); }
+.alert-success { background: var(--color-bg-success-subtle); color: var(--color-status-success); }
+.alert-info { background: var(--color-bg-info-subtle); color: var(--color-status-info); }
+.alert-warning { background: var(--color-bg-warning-subtle); color: var(--color-status-warning); }
+.alert-danger { background: var(--color-bg-danger-subtle); color: var(--color-status-danger); }
 .badge { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-xs); font-weight: var(--font-weight-medium);
   background: var(--color-bg-sunken); color: var(--color-text-primary); border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); }
 .badge i { width: 8px; height: 8px; border-radius: var(--radius-full); }
@@ -109,6 +110,8 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
 .demo-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--font-size-sm); }
 .demo-list li { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border-default); border-radius: var(--radius-md); }
+.demo-list li:hover { background: var(--color-bg-hover); }
+.demo-list li:active { background: var(--color-bg-active); }
 .demo-list svg { width: 16px; height: 16px; color: var(--color-icon-brand); flex: none; }
 </style>
 </head>
@@ -159,6 +162,7 @@ code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); col
       <div class="demo-actions">
         <button type="button" class="btn-primary">${icons.arrowRight} 登入</button>
         <button type="button">取消</button>
+        <button type="button" disabled class="btn-disabled">已停用</button>
         <a href="#" onclick="return false">忘記密碼？</a>
       </div>
     </div>

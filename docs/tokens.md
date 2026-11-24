@@ -38,7 +38,9 @@ semantic.json     用途：這個值拿來做什麼           color.bg.brand = {
 
 ## 目前的值
 
-品牌色系已定調為**綠（主色 `brand`）、青（`cyan`）、黃（`yellow`）**三色。色階以 OKLCH 色彩空間產生（綠 H150、青 H208、黃 H100），各階亮度間距均勻；語意層在深淺色模式下的文字對比已驗證達 WCAG AA（一般文字 4.5:1），其中 warning 淺色刻意用 `yellow.700` 而非 600，因為黃色要在淺底上達到文字對比標準必須夠深。之後微調色值時：改 `primitives.json` 的數值後跑 `npm run preview`，檢查對比仍達標，且主色、輔色和狀態色之間還分得開。
+品牌色系已定調為**綠（主色 `brand`）、青（`cyan`）、黃（`yellow`）**三色，加上危險用的 `red`。前三色階以 OKLCH 色彩空間產生（綠 H150、青 H208、黃 H100），各階亮度間距均勻；red 完整色階以既有的 400/600 為錨，中間階沿用 brand 的亮度節奏、兩端對齊其他色階的端點亮度。語意層在深淺色模式下的文字對比已驗證達 WCAG AA（一般文字 4.5:1），其中 warning 淺色刻意用 `yellow.700` 而非 600，因為黃色要在淺底上達到文字對比標準必須夠深。之後微調色值時：改 `primitives.json` 的數值後跑 `npm run preview`，檢查對比仍達標，且主色、輔色和狀態色之間還分得開。
+
+四個狀態色各有一個淡底（`bg.success-subtle`、`bg.warning-subtle`、`bg.danger-subtle`、`bg.info-subtle`），做 alert、badge、toast 時淡底配狀態色文字，對比已驗證達 AA：淺色取各色階的 50，深色取 900；例外是 warning——黃色階整體偏亮，淺色的 50 幾乎看不出色相，改用 100，深色配合 `accent.subtle` 用 800。`bg.hover`、`bg.active`、`bg.overlay` 是半透明覆蓋色，疊在任何底色上使用（hover/active 疊在元件上表示互動狀態，overlay 做彈窗遮罩）；停用狀態用 `bg.disabled` 配 `text.disabled`。`text.on-accent` 定義 accent 黃底上的文字——必須是深色，深淺兩模式同值。
 
 字體預設 `Inter` 搭配 `Noto Sans TC`，有中文時會自動退回系統的蘋方或微軟正黑體。中文內文行高用 1.7，比英文常見的 1.5 寬鬆，是刻意的。
 

@@ -3,17 +3,27 @@
   "color": {
     "$type": "color",
     "bg": {
+      "$description": "hover、active、overlay 是半透明覆蓋色，疊在任何底色上使用",
       "canvas":  { "$value": "{color.neutral.50}",  "$extensions": { "mode": { "dark": "{color.neutral.900}" } } },
       "surface": { "$value": "{color.neutral.0}",   "$extensions": { "mode": { "dark": "{color.neutral.800}" } } },
       "sunken":  { "$value": "{color.neutral.100}", "$extensions": { "mode": { "dark": "{color.neutral.1000}" } } },
       "brand":   { "$value": "{color.brand.600}",   "$extensions": { "mode": { "dark": "{color.brand.400}" } } },
-      "brand-subtle": { "$value": "{color.brand.50}", "$extensions": { "mode": { "dark": "{color.brand.900}" } } }
+      "brand-subtle": { "$value": "{color.brand.50}", "$extensions": { "mode": { "dark": "{color.brand.900}" } } },
+      "success-subtle": { "$value": "{color.brand.50}",   "$extensions": { "mode": { "dark": "{color.brand.900}" } } },
+      "warning-subtle": { "$value": "{color.yellow.100}", "$extensions": { "mode": { "dark": "{color.yellow.800}" } } },
+      "danger-subtle":  { "$value": "{color.red.50}",     "$extensions": { "mode": { "dark": "{color.red.900}" } } },
+      "info-subtle":    { "$value": "{color.cyan.50}",    "$extensions": { "mode": { "dark": "{color.cyan.900}" } } },
+      "hover":    { "$value": "rgb(26 25 23 / 0.05)", "$extensions": { "mode": { "dark": "rgb(255 255 255 / 0.08)" } } },
+      "active":   { "$value": "rgb(26 25 23 / 0.09)", "$extensions": { "mode": { "dark": "rgb(255 255 255 / 0.14)" } } },
+      "disabled": { "$value": "{color.neutral.100}",  "$extensions": { "mode": { "dark": "{color.neutral.800}" } } },
+      "overlay":  { "$value": "rgb(26 25 23 / 0.40)", "$extensions": { "mode": { "dark": "rgb(0 0 0 / 0.55)" } } }
     },
     "text": {
       "primary":   { "$value": "{color.neutral.900}", "$extensions": { "mode": { "dark": "{color.neutral.50}" } } },
       "secondary": { "$value": "{color.neutral.600}", "$extensions": { "mode": { "dark": "{color.neutral.300}" } } },
       "disabled":  { "$value": "{color.neutral.400}", "$extensions": { "mode": { "dark": "{color.neutral.500}" } } },
       "on-brand":  { "$value": "{color.neutral.0}",   "$extensions": { "mode": { "dark": "{color.neutral.900}" } } },
+      "on-accent": { "$value": "{color.neutral.900}", "$extensions": { "mode": { "dark": "{color.neutral.900}" } } },
       "link":      { "$value": "{color.brand.600}",   "$extensions": { "mode": { "dark": "{color.brand.300}" } } }
     },
     "border": {
